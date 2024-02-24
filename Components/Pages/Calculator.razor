@@ -1,0 +1,77 @@
+﻿@page "/calculator"
+@using Assignment2.Data
+
+<h3>Calculator</h3>
+
+<p>Enter first number</p>
+<input placeholder="Enter First Number" @bind="firstNum" />
+
+<input placeholder="Enter Second Number" @bind="secondNum"/>
+<button @onclick=" () => Add(firstNum, secondNum)">Add (+)</button> 
+
+@code {
+	private string firstNum;
+	private string secondNum;
+	
+	//<button @onclick="() => Add(firstNum,secondNum)">Add</button>
+	private void CheckValid(string numOne, string numTwo)
+	{
+		double d;
+		double e;
+		if (!Double.TryParse(firstNum, out d) | !Double.TryParse(secondNum, out e))
+		{
+			throw new NonNumericInputException();
+		}
+	}
+
+
+
+	private double Add(string firstNum, string secondNum)
+	{
+		try
+		{
+			CheckValid(firstNum, secondNum);
+		}
+		catch (NonNumericInputException ex)
+		{
+			App.Current.MainPage.DisplayAlert("Error", ex.Message, "Ok");
+		}
+
+			return 1.0;
+
+		
+		
+	}
+	
+	/*
+	private void Add()
+	{
+		App.Current.MainPage.DisplayAlert("Error", "Error: Cannot divide by zero.", "Ok");
+	}
+	*/
+	private double Subtract(double numOne, double numTwo)
+	{
+		double result = (numOne - numTwo);
+
+		return result;
+	}
+
+	private double Multiply(double numOne, double numTwo)
+	{
+		double result = (numOne * numTwo);
+
+		return result;
+	}
+
+	private double Divide(double numOne, double numTwo)
+	{
+		try {
+			double result = (numOne / numTwo);
+		}
+		catch (DivideByZeroException) {
+			App.Current.MainPage.DisplayAlert("Error","Error: Cannot divide by zero.","Ok");
+		}
+
+		return 1.0;
+	}
+}
