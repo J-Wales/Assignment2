@@ -1,7 +1,6 @@
 ﻿@page "/calculator"
 @using Assignment2.Data
 
-
 <h3>Calculator</h3>
 
 <div>
@@ -15,28 +14,15 @@
 <div>
 	Result <input disabled="true" @bind="result" />
 </div>
-<Button Color="ButtonColor.Primary" Outline="true"> Primary </Button>
 
 <div>
-	<button color="ButtonColor.Success" outline="true" @onclick=" () => Add(firstNum, secondNum)">Add (+)</button> <button @onclick=" () => Subtract(firstNum, secondNum)">Subtract (-)</button> <button @onclick=" () => Multiply(firstNum, secondNum)">Multiply (X)</button> <button @onclick=" () => ClearAll()">Clear All</button>
+	<button class="btn-outline-success rounded" @onclick=" () => Add(firstNum, secondNum)">Add (+)</button> <button class="btn-outline-primary rounded" @onclick=" () => Subtract(firstNum, secondNum)">Subtract (-)</button> <button class="btn-outline-info rounded" @onclick=" () => Multiply(firstNum, secondNum)">Multiply (X)</button> <button class="btn-outline-secondary rounded" @onclick=" () => ClearAll()">Clear All</button>
 </div>
-
 
 @code {
 	private string firstNum;
 	private string secondNum;
 	private string result;
-	/*
-	private void CheckValid(string numOne, string numTwo)
-		{
-		double d;
-		double e;
-		if (!Double.TryParse(firstNum, out d) | !Double.TryParse(secondNum, out e))
-			{
-			throw new NonNumericInputException();
-	}
-	}
-	*/
 
 	private double CheckValid(string num)
 	{
@@ -47,7 +33,6 @@
 		}
 		return d;
 	}
-
 
 	private void Add(string firstNum, string secondNum)
 	{
@@ -61,7 +46,6 @@
 		{
 			App.Current.MainPage.DisplayAlert("Error", ex.Message, "Ok");
 		}
-
 	}
 
 	private void Subtract(string firstNum, string secondNum)
@@ -127,5 +111,4 @@
 		secondNum = string.Empty;
 		result = string.Empty;
 	}
-
 }
