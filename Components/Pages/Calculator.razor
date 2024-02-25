@@ -1,77 +1,131 @@
 ﻿@page "/calculator"
 @using Assignment2.Data
 
+
 <h3>Calculator</h3>
 
-<p>Enter first number</p>
-<input placeholder="Enter First Number" @bind="firstNum" />
+<div>
+	Enter first number <input placeholder="Enter First Number" @bind="firstNum" />
+</div>
 
-<input placeholder="Enter Second Number" @bind="secondNum"/>
-<button @onclick=" () => Add(firstNum, secondNum)">Add (+)</button> 
+<div>
+	Enter second number <input placeholder="Enter Second Number" @bind="secondNum" />
+</div>
+
+<div>
+	Result <input disabled="true" @bind="result" />
+</div>
+<Button Color="ButtonColor.Primary" Outline="true"> Primary </Button>
+
+<div>
+	<button color="ButtonColor.Success" outline="true" @onclick=" () => Add(firstNum, secondNum)">Add (+)</button> <button @onclick=" () => Subtract(firstNum, secondNum)">Subtract (-)</button> <button @onclick=" () => Multiply(firstNum, secondNum)">Multiply (X)</button> <button @onclick=" () => ClearAll()">Clear All</button>
+</div>
+
 
 @code {
 	private string firstNum;
 	private string secondNum;
-	
-	//<button @onclick="() => Add(firstNum,secondNum)">Add</button>
+	private string result;
+	/*
 	private void CheckValid(string numOne, string numTwo)
-	{
+		{
 		double d;
 		double e;
 		if (!Double.TryParse(firstNum, out d) | !Double.TryParse(secondNum, out e))
+			{
+			throw new NonNumericInputException();
+	}
+	}
+	*/
+
+	private double CheckValid(string num)
+	{
+		double d;
+		if (!Double.TryParse(num, out d))
 		{
 			throw new NonNumericInputException();
 		}
+		return d;
 	}
 
 
-
-	private double Add(string firstNum, string secondNum)
+	private void Add(string firstNum, string secondNum)
 	{
 		try
 		{
-			CheckValid(firstNum, secondNum);
+			double numOne = CheckValid(firstNum);
+			double numTwo = CheckValid(secondNum);
+			result = Convert.ToString((numOne + numTwo));
 		}
 		catch (NonNumericInputException ex)
 		{
 			App.Current.MainPage.DisplayAlert("Error", ex.Message, "Ok");
 		}
 
-			return 1.0;
-
-		
-		
 	}
-	
-	/*
-	private void Add()
+
+	private void Subtract(string firstNum, string secondNum)
 	{
-		App.Current.MainPage.DisplayAlert("Error", "Error: Cannot divide by zero.", "Ok");
+		try
+		{
+			double numOne = CheckValid(firstNum);
+			double numTwo = CheckValid(secondNum);
+			result = Convert.ToString((numOne - numTwo));
+		}
+		catch (NonNumericInputException ex)
+		{
+			App.Current.MainPage.DisplayAlert("Error", ex.Message, "Ok");
+		}
+	}
+
+	private void Multiply(string firstNum, string secondNum)
+	{
+		try
+		{
+			double numOne = CheckValid(firstNum);
+			double numTwo = CheckValid(secondNum);
+			result = Convert.ToString((numOne * numTwo));
+		}
+		catch (NonNumericInputException ex)
+		{
+			App.Current.MainPage.DisplayAlert("Error", ex.Message, "Ok");
+		}
+	}
+	/*
+	private void Divide(string firstNum, string secondNum)
+		{
+		bool valid = true;
+		double numOne;
+			double numTwo;
+			try
+			{
+			numOne = CheckValid(firstNum);
+			numTwo = CheckValid(secondNum);
+		}
+		catch (NonNumericInputException ex)
+			{
+			App.Current.MainPage.DisplayAlert("Error", ex.Message, "Ok");
+			valid = false;
+		}
+			finally
+				{
+				try
+				{
+				result = (numOne / numTwo);
+			}
+			catch (DivideByZeroException)
+				{
+				App.Current.MainPage.DisplayAlert("Error", "Error: Cannot divide by zero.", "Ok");
+		}
+		}
+
 	}
 	*/
-	private double Subtract(double numOne, double numTwo)
+	private void ClearAll()
 	{
-		double result = (numOne - numTwo);
-
-		return result;
+		firstNum = string.Empty;
+		secondNum = string.Empty;
+		result = string.Empty;
 	}
 
-	private double Multiply(double numOne, double numTwo)
-	{
-		double result = (numOne * numTwo);
-
-		return result;
-	}
-
-	private double Divide(double numOne, double numTwo)
-	{
-		try {
-			double result = (numOne / numTwo);
-		}
-		catch (DivideByZeroException) {
-			App.Current.MainPage.DisplayAlert("Error","Error: Cannot divide by zero.","Ok");
-		}
-
-		return 1.0;
-	}
 }
