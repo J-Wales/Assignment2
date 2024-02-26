@@ -6,14 +6,14 @@
 
 <h2>To Do</h2>
 <input type="text" @bind="newToDoItem" placeholder="Enter a new ToDo to your list." />
-<button class="add-button" @onclick="AddToDoItem">Add</button>
+<button class="btn-primary" @onclick="AddToDoItem">Add</button>
 <ul>
     @foreach (var item in toDoItems)
     {
         <li>
             <input type="checkbox" @onchange="@(() => MarkAsCompleted(item))" />
             <span>@item.Title</span>
-            <button class="delete-button" @onclick="@(() => DeleteToDoItem(item))">Delete</button>
+            <button class="btn-danger rounded" @onclick="@(() => DeleteToDoItem(item))">Delete</button>
         </li>
     }
 </ul>
@@ -24,7 +24,7 @@
     {
         <li>
             <span>@item.Title</span>
-            <button class="delete-button" @onclick="@(() => DeleteToDoItem(item))">Delete</button>
+            <button class="btn-danger rounded" @onclick="@(() => DeleteToDoItem(item))">Delete</button>
         </li>
     }
 </ul>
