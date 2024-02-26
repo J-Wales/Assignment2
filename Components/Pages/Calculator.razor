@@ -3,101 +3,126 @@
 
 <h3>Calculator</h3>
 
+<!-- Create input box for the first number and bind the content to the firstNum variable. -->
 <div>
 	Enter first number <input placeholder="Enter First Number" @bind="firstNum" />
 </div>
 
+<!-- Create input box for the second number and bind the content to the secondNum variable. -->
 <div>
 	Enter second number <input placeholder="Enter Second Number" @bind="secondNum" />
 </div>
 
+<!-- Create result box, disable it so that the user cannot edit it, and bind it's content to the result variable. -->
 <div>
 	Result <input disabled="true" @bind="result" />
 </div>
 
+<!-- Create the different equation buttons a associate them with their respective methods. -->
 <div>
 	<button class="btn-outline-success rounded" @onclick=" () => Add(firstNum, secondNum)">Add (+)</button> <button class="btn-outline-primary rounded" @onclick=" () => Subtract(firstNum, secondNum)">Subtract (-)</button> <button class="btn-outline-info rounded" @onclick=" () => Multiply(firstNum, secondNum)">Multiply (X)</button> <button class="btn-outline-danger rounded" @onclick=" () => Divide(firstNum, secondNum)">Divide (/)</button> <button class="btn-outline-secondary rounded" @onclick=" () => ClearAll()">Clear All</button>
 </div>
 
 @code {
+	// Create variables.
 	private string firstNum;
 	private string secondNum;
 	private string result;
 
+	// Create the CheckValid method that checks if the contents of a string can be converted into double.
 	private double CheckValid(string num)
 	{
 		double d;
+
+		// If Double.TryParse() returns false...
 		if (!Double.TryParse(num, out d))
 		{
+			// Throw a new NonNumericInputException().
 			throw new NonNumericInputException();
 		}
 		return d;
 	}
 
+	// Create the Add method.
 	private void Add(string firstNum, string secondNum)
 	{
+		// Try to convert the two numbers to doubles and add them together, then change the value of the result variable to the sum.
 		try
 		{
 			double numOne = CheckValid(firstNum);
 			double numTwo = CheckValid(secondNum);
 			result = Convert.ToString((numOne + numTwo));
 		}
+		// If a NonNumericInputException is caught, display an alert informing the user the numbers are invalid.
 		catch (NonNumericInputException ex)
 		{
 			App.Current.MainPage.DisplayAlert("Error", ex.Message, "Ok");
 		}
 	}
 
+	// Create the Subtract method.
 	private void Subtract(string firstNum, string secondNum)
 	{
+		// Try to convert the two numbers to doubles and subtract them, then change the value of the result variable to the difference.
 		try
 		{
 			double numOne = CheckValid(firstNum);
 			double numTwo = CheckValid(secondNum);
 			result = Convert.ToString((numOne - numTwo));
 		}
+		// If a NonNumericInputException is caught, display an alert informing the user the numbers are invalid.
 		catch (NonNumericInputException ex)
 		{
 			App.Current.MainPage.DisplayAlert("Error", ex.Message, "Ok");
 		}
 	}
 
+	//Create the Multiply method.
 	private void Multiply(string firstNum, string secondNum)
 	{
+		// Try to convert the two numbers to doubles and multiply them, then change the value of the result variable to the product.
 		try
 		{
 			double numOne = CheckValid(firstNum);
 			double numTwo = CheckValid(secondNum);
 			result = Convert.ToString((numOne * numTwo));
 		}
+		// If a NonNumericInputException is caught, display an alert informing the user the numbers are invalid.
 		catch (NonNumericInputException ex)
 		{
 			App.Current.MainPage.DisplayAlert("Error", ex.Message, "Ok");
 		}
 	}
 
+	// Create the Divide method.
 	private void Divide(string firstNum, string secondNum)
 	{
-		double numOne;
-		double numTwo;
+		// Try to convert the two numbers to doubles and divide them, then change the value of the result variable to the quotient.
 		try
 		{
-			numOne = CheckValid(firstNum);
-			numTwo = CheckValid(secondNum);
+			double numOne = CheckValid(firstNum);
+			double numTwo = CheckValid(secondNum);
+			int testResult = Convert.ToInt32(numOne) / Convert.ToInt32(numTwo);
 			result = Convert.ToString((numOne / numTwo));
 		}
+		// If a NonNumericInputException is caught...
 		catch (NonNumericInputException ex)
 		{
+			// Display an alert informing the user the numbers are invalid.
 			App.Current.MainPage.DisplayAlert("Error", ex.Message, "Ok");
 		}
+		// If a DivideByZeroException is caught...
 		catch (DivideByZeroException)
 		{
+			// Display an alert informing the user that they cannot divide by zero.
 			App.Current.MainPage.DisplayAlert("Error", "Error: Cannot divide by zero.", "Ok");
 		}
 	}
 
+	// Create the ClearAll method.
 	private void ClearAll()
 	{
+		// Set the values of the firstNum, secondNum, and result to empty strings.
 		firstNum = string.Empty;
 		secondNum = string.Empty;
 		result = string.Empty;
