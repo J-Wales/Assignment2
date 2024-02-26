@@ -95,14 +95,13 @@
 				{
 				try
 				{
-				result = (numOne / numTwo);
+				result = Convert.ToString((numOne / numTwo));
 			}
 			catch (DivideByZeroException)
 				{
 				App.Current.MainPage.DisplayAlert("Error", "Error: Cannot divide by zero.", "Ok");
 		}
 		}
-
 	}
 	*/
 	private void ClearAll()
