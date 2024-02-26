@@ -16,7 +16,7 @@
 </div>
 
 <div>
-	<button class="btn-outline-success rounded" @onclick=" () => Add(firstNum, secondNum)">Add (+)</button> <button class="btn-outline-primary rounded" @onclick=" () => Subtract(firstNum, secondNum)">Subtract (-)</button> <button class="btn-outline-info rounded" @onclick=" () => Multiply(firstNum, secondNum)">Multiply (X)</button> <button class="btn-outline-secondary rounded" @onclick=" () => ClearAll()">Clear All</button>
+	<button class="btn-outline-success rounded" @onclick=" () => Add(firstNum, secondNum)">Add (+)</button> <button class="btn-outline-primary rounded" @onclick=" () => Subtract(firstNum, secondNum)">Subtract (-)</button> <button class="btn-outline-info rounded" @onclick=" () => Multiply(firstNum, secondNum)">Multiply (X)</button> <button class="btn-outline-danger rounded" @onclick=" () => Divide(firstNum, secondNum)">Divide (/)</button> <button class="btn-outline-secondary rounded" @onclick=" () => ClearAll()">Clear All</button>
 </div>
 
 @code {
@@ -75,35 +75,27 @@
 			App.Current.MainPage.DisplayAlert("Error", ex.Message, "Ok");
 		}
 	}
-	/*
+
 	private void Divide(string firstNum, string secondNum)
-		{
-		bool valid = true;
+	{
 		double numOne;
-			double numTwo;
-			try
-			{
+		double numTwo;
+		try
+		{
 			numOne = CheckValid(firstNum);
 			numTwo = CheckValid(secondNum);
+			result = Convert.ToString((numOne / numTwo));
 		}
 		catch (NonNumericInputException ex)
-			{
+		{
 			App.Current.MainPage.DisplayAlert("Error", ex.Message, "Ok");
-			valid = false;
 		}
-			finally
-				{
-				try
-				{
-				result = Convert.ToString((numOne / numTwo));
-			}
-			catch (DivideByZeroException)
-				{
-				App.Current.MainPage.DisplayAlert("Error", "Error: Cannot divide by zero.", "Ok");
-		}
+		catch (DivideByZeroException)
+		{
+			App.Current.MainPage.DisplayAlert("Error", "Error: Cannot divide by zero.", "Ok");
 		}
 	}
-	*/
+
 	private void ClearAll()
 	{
 		firstNum = string.Empty;
